@@ -1,0 +1,75 @@
+
+<%- include('../partials/header.ejs')%>
+<div class="content">
+    <div class="center-container mb-100">
+        <div class="event-heading">
+            <h3> <%=user.firstName%>'s trades</h3>
+       </div>
+        <% if(trades.length) { %>
+            <table border ="3">
+                <thead>
+            <tr>
+              <th>Category</th>
+              <th>Title</th>
+              <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% trades.forEach((trade, index) => { %>
+            <tr>
+                <td>  <a href="/items/<%=trade.id%>"> <%=trade.category %> </a></td>
+                <td><%=trade.title %></td>
+                <td><%=trade.status %></td>
+                <td>
+                    <form style="float: left;">
+                        <form style="float: left;">
+                            <button type="submit" formmethod="GET" formaction="/items/<%= trade.id%>/edit">Edit</button>
+                <button type="submit" formmethod="POST" formaction="/items/<%= trade.id%>?_method=DELETE">Delete</button>
+                        <% if(trade.status == "Offer Pending") { %>
+                            <button class="button update-btn" type="submit" formmethod="GET" formaction="/items/<%=trade.offerId%>/manage">Manage Offer</button>
+                            <% } %>
+                    </form>
+                </td>
+                <tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+                    <%} else { %>
+                        <p>There are no trades to display.</p>
+                        <%}%>
+                        <br>
+
+                        
+
+                <br>
+
+                        <% if(watchList.length) { %>
+                            <h3>Your Watched Trades</h3>
+                                <table border ="3">
+                                    <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% watchList.forEach((watchTrade, index) => { %>
+                                    <tr>
+                                <td>  <a href="/items/<%=watchTrade.id%>"> <%=watchTrade.title %> </a></td>
+                                        <td><%=watchTrade.category %></td>
+                                        <td><%=watchTrade.status %></td>
+                                        <td>
+                                            <form>
+                            <button class="button delete-btn" type="submit" formmethod = "POST" formaction ="/items/<%=watchTrade.id%>/unwatch?_method=PUT">UnWatch</button>
+                            </form>
+                        </td>
+                        <tr>
+                            <%}) %>
+                    </tbody>
+                </table>  
+                <%}%>           
+    </div>
+</div>
+<%- include('../partials/footer.ejs')%>

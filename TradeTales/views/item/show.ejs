@@ -1,0 +1,36 @@
+<%- include('../partials/header.ejs') %>
+               
+<div class=" d-flex align-items-center justify-content-center">
+    <div class="box-main2">
+        <div class="col-lg mb-4">
+            <div class="card card-style">
+                      <img src="<%= item.image %>" width="300" height="200" alt="Fingertip Pulse Oximeter">
+                     </div>
+                <h5>Details:</h5> <h6><%= item.content%></h6>
+            <h5>Status</h5> <h6><%= item.status %></h6>
+
+                <nav class="rate">
+                    <% if(user != item.author._id) { %>
+                <p>Are you interested in this purchase?</p>
+                <form> 
+                    <% if(item.status ) { %>
+                        <button class="button update-btn" type="submit" formmethod = "GET" formaction = "/items/<%=item.id%>/trade">Trade</button>
+                      <%}%>
+                      
+                    <button class="button delete-btn" type="submit"  formmethod = "POST" formaction = "/items/<%=item.id%>/watch">Watch</button>
+                    </form>
+                    <%}%>
+                    <% if(user == item.author._id) { %>
+                        <form>
+                            <button class="button update-btn" type="submit" formmethod="GET" formaction="/items/<%= item.id %>/edit">Edit</button>
+                            <button class="button delete-btn" type="submit" formmethod="POST" formaction="/items/<%= item.id %>?_method=DELETE">Delete</button>
+                        </form>
+                        <% } %>
+              
+                </nav>
+            </div>
+        </div>
+         </div>
+        </div>
+
+<%- include('../partials/footer.ejs') %>
